@@ -32,15 +32,7 @@ I asked ChatGPT to generate a full list of the plugin features:
 
 ## Installation
 
-You need to have [Laravel GPT from Malkuhr](https://github.com/maltekuhr/laravel-gpt) installed to use this package. If you haven't done so, follow the [installation instructions](https://github.com/maltekuhr/laravel-gpt?tab=readme-ov-file#installation):
-
-You can install the package via composer:
-
-```bash
-composer require maltekuhr/laravel-gpt:^0.1.5
-```
-
-Next you need to configure your OpenAI API Key and Organization ID. You can find both in the [OpenAI Dashboard](https://platform.openai.com/account/org-settings).
+First, configure your OpenAI API Key and Organization ID. You can find both in the [OpenAI Dashboard](https://platform.openai.com/account/org-settings).
 
 Add these to your `.env` file:
 
@@ -51,11 +43,13 @@ OPENAI_ORGANIZATION=your-organization-id-here
 
 > **Note:** After publishing the config file (see below), these values will be available in `config/ai-chat-agent.php` and can be customized there as well.
 
-Now install this package:
+Install this package via Composer:
 
 ```bash
 composer require edrisaturay/filament-ai-chat-agent
 ```
+
+This will automatically install the required [Laravel GPT package](https://github.com/maltekuhr/laravel-gpt) as a dependency.
 
 ## Publishing Assets
 
