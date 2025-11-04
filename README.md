@@ -32,24 +32,57 @@ I asked ChatGPT to generate a full list of the plugin features:
 
 ## Installation
 
-First, configure your OpenAI API Key and Organization ID. You can find both in the [OpenAI Dashboard](https://platform.openai.com/account/org-settings).
-
-Add these to your `.env` file:
-
-```dotenv
-OPENAI_API_KEY=your-api-key-here
-OPENAI_ORGANIZATION=your-organization-id-here
-```
-
-> **Note:** After publishing the config file (see below), these values will be available in `config/ai-chat-agent.php` and can be customized there as well.
-
 Install this package via Composer:
 
 ```bash
 composer require edrisaturay/filament-ai-chat-agent
 ```
 
-> **Note:** This package includes all necessary OpenAI integration functionality and does not require any additional dependencies.
+> **Note:** This package includes all necessary AI integration functionality and does not require any additional dependencies.
+
+## Configuration
+
+### Choose Your AI Provider
+
+This package supports both **OpenAI** and **Azure OpenAI**. Set your preferred provider in your `.env` file:
+
+```dotenv
+FILAMENT_AI_CHAT_AGENT_PROVIDER=openai
+```
+
+or
+
+```dotenv
+FILAMENT_AI_CHAT_AGENT_PROVIDER=azure
+```
+
+### OpenAI Configuration
+
+If using OpenAI, configure your API Key and Organization ID. You can find both in the [OpenAI Dashboard](https://platform.openai.com/account/org-settings).
+
+Add these to your `.env` file:
+
+```dotenv
+FILAMENT_AI_CHAT_AGENT_PROVIDER=openai
+OPENAI_API_KEY=your-api-key-here
+OPENAI_ORGANIZATION=your-organization-id-here
+```
+
+### Azure OpenAI Configuration
+
+If using Azure OpenAI, configure your endpoint, API key, region, and deployment name. You can find these in the [Azure Portal](https://portal.azure.com).
+
+Add these to your `.env` file:
+
+```dotenv
+FILAMENT_AI_CHAT_AGENT_PROVIDER=azure
+AZURE_OPENAI_ENDPOINT=https://your-resource-name.openai.azure.com
+AZURE_OPENAI_API_KEY=your-api-key-here
+AZURE_OPENAI_REGION=your-region
+AZURE_OPENAI_DEPLOYMENT_NAME=your-deployment-name
+```
+
+> **Note:** After publishing the config file (see below), these values will be available in `config/ai-chat-agent.php` and can be customized there as well.
 
 ## Publishing Assets
 
@@ -63,9 +96,9 @@ Publish the configuration file:
 php artisan vendor:publish --tag="ai-chat-agent-config"
 ```
 
-This will create a `config/ai-chat-agent.php` file where you can customize the default settings, including OpenAI API credentials.
+This will create a `config/ai-chat-agent.php` file where you can customize the default settings, including AI provider selection and API credentials.
 
-The config file will read the `OPENAI_API_KEY` and `OPENAI_ORGANIZATION` from your `.env` file by default, but you can override them directly in the config file if needed.
+The config file will read the provider and API credentials from your `.env` file by default, but you can override them directly in the config file if needed.
 
 ### Views
 

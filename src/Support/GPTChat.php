@@ -2,12 +2,13 @@
 
 namespace EdrisaTuray\FilamentAiChatAgent\Support;
 
-use Illuminate\Support\Facades\Http;
+use EdrisaTuray\FilamentAiChatAgent\Support\Contracts\AiProviderContract;
 use Illuminate\Support\Facades\Log;
 
 abstract class GPTChat
 {
     protected array $messages = [];
+    protected ?AiProviderContract $provider = null;
 
     /**
      * The message which explains the assistant what to do and which rules to follow.
@@ -81,7 +82,7 @@ abstract class GPTChat
     }
 
     /**
-     * Send the chat request to OpenAI.
+     * Send the chat request to the AI provider.
      *
      * @return $this
      */
@@ -181,47 +182,38 @@ abstract class GPTChat
     }
 
     /**
-     * Make the OpenAI API request.
+     * Get the AI provider instance.
+     *
+     * @return AiProviderContract
+     */
+    protected function getProvider(): AiProviderContract
+    {
+        if ($this->provider === null) {
+            $this->provider = AiProviderFactory::make();
+        }
+
+        return $this->provider;
+    }
+
+    /**
+     * Make the AI API request using the configured provider.
      *
      * @param array $payload
      * @return array
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     protected function makeOpenAIRequest(array $payload): array
     {
-        $apiKey = config('ai-chat-agent.openai_api_key') ?: env('OPENAI_API_KEY');
-        $organization = config('ai-chat-agent.openai_organization') ?: env('OPENAI_ORGANIZATION');
-
-        if (!$apiKey) {
-            throw new \RuntimeException('OpenAI API key is not configured. Please set OPENAI_API_KEY in your .env file or config/ai-chat-agent.php');
-        }
-
-        $headers = [
-            'Authorization' => 'Bearer ' . $apiKey,
-            'Content-Type' => 'application/json',
-        ];
-
-        if ($organization) {
-            $headers['OpenAI-Organization'] = $organization;
-        }
-
-        $response = Http::withHeaders($headers)
-            ->timeout(120)
-            ->post('https://api.openai.com/v1/chat/completions', $payload);
-
-        if ($response->failed()) {
-            $error = $response->json();
-            Log::error('OpenAI API Error', [
-                'status' => $response->status(),
-                'error' => $error,
+        try {
+            return $this->getProvider()->makeRequest($payload);
+        } catch (\RuntimeException $e) {
+            Log::error('AI Provider Error', [
+                'provider' => get_class($this->getProvider()),
+                'error' => $e->getMessage(),
             ]);
-            
-            throw new \RuntimeException(
-                'OpenAI API Error: ' . ($error['error']['message'] ?? 'Unknown error')
-            );
-        }
 
-        return $response->json();
+            throw $e;
+        }
     }
 
     /**

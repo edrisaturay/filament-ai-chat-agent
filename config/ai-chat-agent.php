@@ -15,6 +15,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | AI Provider
+    |--------------------------------------------------------------------------
+    |
+    | The AI provider to use. Supported providers: 'openai', 'azure', 'azure-openai'
+    |
+    | Set this in your .env file:
+    | FILAMENT_AI_CHAT_AGENT_PROVIDER=openai
+    | or
+    | FILAMENT_AI_CHAT_AGENT_PROVIDER=azure
+    |
+    */
+
+    'provider' => env('FILAMENT_AI_CHAT_AGENT_PROVIDER', 'openai'),
+
+    /*
+    |--------------------------------------------------------------------------
     | OpenAI API Configuration
     |--------------------------------------------------------------------------
     |
@@ -29,6 +45,28 @@ return [
     'openai_api_key' => env('OPENAI_API_KEY'),
 
     'openai_organization' => env('OPENAI_ORGANIZATION'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Azure OpenAI Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Your Azure OpenAI endpoint, API key, region, and deployment name.
+    | These should be set in your .env file and will be read from there.
+    |
+    | Get your credentials from: https://portal.azure.com
+    |
+    */
+
+    'azure_openai_endpoint' => env('AZURE_OPENAI_ENDPOINT'),
+
+    'azure_openai_api_key' => env('AZURE_OPENAI_API_KEY'),
+
+    'azure_openai_region' => env('AZURE_OPENAI_REGION'),
+
+    'azure_openai_deployment_name' => env('AZURE_OPENAI_DEPLOYMENT_NAME'),
+
+    'azure_openai_api_version' => env('AZURE_OPENAI_API_VERSION', '2024-02-15-preview'),
 
     /*
     |--------------------------------------------------------------------------
