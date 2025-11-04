@@ -223,6 +223,35 @@ public function panel(Panel $panel): Panel
 }
 ```
 
+## Versioning
+
+This package uses semantic versioning (SemVer). The version is automatically bumped on each push to the `main` branch via GitHub Actions.
+
+### Automatic Version Bumping
+
+When you push to the `main` branch, the version will be automatically bumped:
+- **Patch version** (default): `1.0.0` → `1.0.1` - For bug fixes and minor changes
+- **Minor version**: Include `[minor]` in your commit message - `1.0.0` → `1.1.0` - For new features
+- **Major version**: Include `[major]` in your commit message - `1.0.0` → `2.0.0` - For breaking changes
+
+Example commit messages:
+- `fix: resolve issue with chat widget [minor]` - Will bump to 1.1.0
+- `feat: add new feature [major]` - Will bump to 2.0.0
+- `fix: bug fix` - Will bump patch version (1.0.1)
+
+### Manual Version Bumping
+
+For local development, you can use the provided script:
+
+```bash
+./scripts/bump-version.sh [major|minor|patch]
+```
+
+This will:
+1. Update the version in `composer.json`
+2. Commit the change
+3. Create a git tag
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
