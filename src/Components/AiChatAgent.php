@@ -122,13 +122,6 @@ class AiChatAgent extends Component
 
     protected function chat(): void
     {
-        if (!class_exists('MalteKuhr\LaravelGPT\GPTChat')) {
-            throw new \RuntimeException(
-                'The maltekuhr/laravel-gpt package is not installed. ' .
-                'Please run: composer require maltekuhr/laravel-gpt:^0.1.5'
-            );
-        }
-
         $chat = new AiChatChat();
         $chat->loadMessages($this->messages);
 

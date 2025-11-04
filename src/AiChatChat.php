@@ -2,9 +2,7 @@
 
 namespace EdrisaTuray\FilamentAiChatAgent;
 
-use MalteKuhr\LaravelGPT\Enums\ChatRole;
-use MalteKuhr\LaravelGPT\GPTChat;
-use MalteKuhr\LaravelGPT\Models\ChatMessage;
+use EdrisaTuray\FilamentAiChatAgent\Support\GPTChat;
 
 class AiChatChat extends GPTChat
 {
@@ -60,15 +58,4 @@ class AiChatChat extends GPTChat
         return filament('ai-chat-agent')->getMaxTokens();
     }
 
-    public function loadMessages(array $messages): static
-    {
-        $this->messages = collect($messages)->map(function ($message) {
-            return ChatMessage::from(
-                role: ChatRole::from($message['role']),
-                content: $message['content'],
-            );
-        })->toArray();
-
-        return $this;
-    }
 }

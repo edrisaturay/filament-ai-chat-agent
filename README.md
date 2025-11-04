@@ -49,7 +49,7 @@ Install this package via Composer:
 composer require edrisaturay/filament-ai-chat-agent
 ```
 
-This will automatically install the required [Laravel GPT package](https://github.com/maltekuhr/laravel-gpt) as a dependency.
+> **Note:** This package includes all necessary OpenAI integration functionality and does not require any additional dependencies.
 
 ## Publishing Assets
 
@@ -200,11 +200,50 @@ You can embed the ChatGPT agent in any Blade file:
 | `startMessage()` | `string,bool,Closure` | `false` | Default message on panel open. Set to `false` to disable. |
 | `logoUrl()` | `string,bool,Closure` | `false` | Overwrite the chat avatar / logo. Set to `false` to show a default GPT icon. |
 
-## Using Laravel GPT Functions
+## Using GPT Functions
 
-Laravel GPT allows you to define custom **GPTFunctions** that ChatGPT can call to execute tasks within your application. This is useful for integrating dynamic data retrieval, calculations, or external API calls into the ChatGPT responses.
+You can define custom **GPT Functions** that ChatGPT can call to execute tasks within your application. This is useful for integrating dynamic data retrieval, calculations, or external API calls into the ChatGPT responses.
 
-Refer to the [Laravel GPT documentation](https://github.com/maltekuhr/laravel-gpt) for more details.
+GPT Functions should be objects with:
+- A `toArray()` method that returns the function definition (name, description, parameters)
+- An `execute(array $arguments)` method that executes the function and returns the result
+
+Example:
+
+```php
+class GetUserDataFunction
+{
+    public function toArray(): array
+    {
+        return [
+            'name' => 'get_user_data',
+            'description' => 'Get user information by ID',
+            'parameters' => [
+                'type' => 'object',
+                'properties' => [
+                    'user_id' => [
+                        'type' => 'integer',
+                        'description' => 'The user ID',
+                    ],
+                ],
+                'required' => ['user_id'],
+            ],
+        ];
+    }
+
+    public function execute(array $arguments): string
+    {
+        $userId = $arguments['user_id'] ?? null;
+        $user = User::find($userId);
+        
+        return json_encode([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+    }
+}
+```
 
 ## Page Watcher
 
