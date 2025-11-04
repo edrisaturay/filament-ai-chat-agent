@@ -46,7 +46,7 @@ class AiChatAgentPlugin implements Plugin
 
     public function boot(Panel $panel): void
     {
-        //
+        // No boot logic needed
     }
 
     public function enabled(bool|Closure $enabled): static

@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class AiChatAgent extends Component
 {
-
     public string $name;
 
     public string $buttonText;
@@ -77,6 +76,7 @@ class AiChatAgent extends Component
             $this->question = "";
             return;
         }
+
         $this->messages[] = [
             "role" => 'user',
             "content" => $this->question,
@@ -122,8 +122,16 @@ class AiChatAgent extends Component
 
     protected function chat(): void
     {
+        if (!class_exists('MalteKuhr\LaravelGPT\GPTChat')) {
+            throw new \RuntimeException(
+                'The maltekuhr/laravel-gpt package is not installed. ' .
+                'Please run: composer require maltekuhr/laravel-gpt:^0.1.5'
+            );
+        }
+
         $chat = new AiChatChat();
         $chat->loadMessages($this->messages);
+
         if ($this->pageWatcherEnabled) {
             $chat->addMessage(filament('ai-chat-agent')->getPageWatcherMessage() . $this->questionContext);
             \Log::info($this->questionContext);
@@ -132,9 +140,7 @@ class AiChatAgent extends Component
         $chat->send();
 
         $this->messages[] = ['role' => 'assistant', 'content' => $chat->latestMessage()->content];
-
         request()->session()->put($this->sessionKey, $this->messages);
-
     }
 
     protected function getDefaultMessages(): array
