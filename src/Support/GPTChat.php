@@ -100,10 +100,26 @@ abstract class GPTChat
         }
 
         foreach ($this->messages as $message) {
-            $messages[] = [
+            $formattedMessage = [
                 'role' => $message['role'] ?? 'user',
-                'content' => $message['content'] ?? '',
             ];
+
+            // Handle function messages - they require 'name' field
+            if (($message['role'] ?? '') === 'function') {
+                $formattedMessage['name'] = $message['name'] ?? '';
+                $formattedMessage['content'] = $message['content'] ?? '';
+            } 
+            // Handle assistant messages with function calls
+            elseif (($message['role'] ?? '') === 'assistant' && isset($message['function_call'])) {
+                $formattedMessage['function_call'] = $message['function_call'];
+                $formattedMessage['content'] = $message['content'] ?? null;
+            } 
+            // Regular messages
+            else {
+                $formattedMessage['content'] = $message['content'] ?? '';
+            }
+
+            $messages[] = $formattedMessage;
         }
 
         $payload = [
