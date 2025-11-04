@@ -42,10 +42,14 @@ composer require maltekuhr/laravel-gpt:^0.1.5
 
 Next you need to configure your OpenAI API Key and Organization ID. You can find both in the [OpenAI Dashboard](https://platform.openai.com/account/org-settings).
 
+Add these to your `.env` file:
+
 ```dotenv
-OPENAI_ORGANIZATION=YOUR_ORGANIZATION_ID
-OPENAI_API_KEY=YOUR_API_KEY
+OPENAI_API_KEY=your-api-key-here
+OPENAI_ORGANIZATION=your-organization-id-here
 ```
+
+> **Note:** After publishing the config file (see below), these values will be available in `config/ai-chat-agent.php` and can be customized there as well.
 
 Now install this package:
 
@@ -53,20 +57,48 @@ Now install this package:
 composer require edrisaturay/filament-ai-chat-agent
 ```
 
-## Views
+## Publishing Assets
 
-Optionally, you can publish the views:
+You can publish the configuration file, views, and translations:
+
+### Config
+
+Publish the configuration file:
+
+```bash
+php artisan vendor:publish --tag="ai-chat-agent-config"
+```
+
+This will create a `config/ai-chat-agent.php` file where you can customize the default settings, including OpenAI API credentials.
+
+The config file will read the `OPENAI_API_KEY` and `OPENAI_ORGANIZATION` from your `.env` file by default, but you can override them directly in the config file if needed.
+
+### Views
+
+Publish the views:
 
 ```bash
 php artisan vendor:publish --tag="ai-chat-agent-views"
 ```
 
-## Translations
+This will publish the views to `resources/views/vendor/ai-chat-agent/` where you can customize them.
 
-Optionally, you can publish translations:
+### Translations
+
+Publish the translations:
 
 ```bash
 php artisan vendor:publish --tag="ai-chat-agent-translations"
+```
+
+This will publish the translations to `lang/vendor/ai-chat-agent/` where you can customize them.
+
+### Publish All
+
+You can also publish all assets at once:
+
+```bash
+php artisan vendor:publish --provider="EdrisaTuray\FilamentAiChatAgent\FilamentAiChatAgentServiceProvider"
 ```
 
 ## Usage
