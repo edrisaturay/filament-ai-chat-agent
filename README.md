@@ -1,19 +1,18 @@
-# ChatGPT Agent for Laravel Filament
+# AI Chat Agent for Laravel Filament
 
-Filament ChatGPT Agent is a Filament plugin that allows you to easily integrate ChatGPT into your Filament project, enabling ChatGPT to access context information from your project by creating GPT functions.
+Filament AI Chat Agent is a Filament plugin that allows you to easily integrate ChatGPT into your Filament project, enabling ChatGPT to access context information from your project by creating GPT functions.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/likeabas/filament-chatgpt-agent.svg?style=flat-square)](https://packagist.org/packages/likeabas/filament-chatgpt-agent)
-[![Total Downloads](https://img.shields.io/packagist/dt/likeabas/filament-chatgpt-agent.svg?style=flat-square)](https://packagist.org/packages/likeabas/filament-chatgpt-agent)
+> **Note:** This is a fork of [likeabas/filament-chatgpt-agent](https://github.com/likeabas/filament-chatgpt-agent) originally created by [Bas Schleijpen](https://github.com/likeabas). This version is maintained by Edrisa Turay.
 
 ## Preview:
 Dark Mode:
-![](https://raw.githubusercontent.com/likeabas/filament-chatgpt-agent/main/screenshots/darkmode.png)
+![](./screenshots/darkmode.png)
 Select a text to quickly insert it:
-![](https://raw.githubusercontent.com/likeabas/filament-chatgpt-agent/main/screenshots/select-to-insert.png)
+![](./screenshots/select-to-insert.png)
 Light Mode:
-![](https://raw.githubusercontent.com/likeabas/filament-chatgpt-agent/main/screenshots/lightmode.png)
+![](./screenshots/lightmode.png)
 ChatGPT can read the page content for extra context:
-![](https://raw.githubusercontent.com/likeabas/filament-chatgpt-agent/main/screenshots/page-watcher.png)
+![](./screenshots/page-watcher.png)
 
 ## Features
 
@@ -51,7 +50,7 @@ OPENAI_API_KEY=YOUR_API_KEY
 Now install this package:
 
 ```bash
-composer require likeabas/filament-chatgpt-agent
+composer require edrisaturay/filament-ai-chat-agent
 ```
 
 ## Views
@@ -59,7 +58,7 @@ composer require likeabas/filament-chatgpt-agent
 Optionally, you can publish the views:
 
 ```bash
-php artisan vendor:publish --tag="chatgpt-agent-views"
+php artisan vendor:publish --tag="ai-chat-agent-views"
 ```
 
 ## Translations
@@ -67,7 +66,7 @@ php artisan vendor:publish --tag="chatgpt-agent-views"
 Optionally, you can publish translations:
 
 ```bash
-php artisan vendor:publish --tag="chatgpt-agent-translations"
+php artisan vendor:publish --tag="ai-chat-agent-translations"
 ```
 
 ## Usage
@@ -78,14 +77,14 @@ Modify your Filament [Panel Configuration](https://laravel-filament.cn/docs/en/3
 
 
 ```php
-use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
+use EdrisaTuray\FilamentAiChatAgent\AiChatAgentPlugin;
 
     public function panel(Panel $panel): Panel
     {
         return $panel
             ...
             ->plugin(
-                ChatgptAgentPlugin::make()
+                AiChatAgentPlugin::make()
             )
             ...
     }
@@ -97,7 +96,7 @@ Also see [all available options](#available-options) below.
 
 ```php
 use App\GPT\Functions\YourCustomGPTFunction;
-use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
+use EdrisaTuray\FilamentAiChatAgent\AiChatAgentPlugin;
 
 ...
 
@@ -106,7 +105,7 @@ use LikeABas\FilamentChatgptAgent\ChatgptAgentPlugin;
         return $panel
             ...
             ->plugin(
-                ChatgptAgentPlugin::make()
+                AiChatAgentPlugin::make()
                     ->defaultPanelWidth('400px') // default 350px
                     ->botName('GPT Assistant')
                     ->model('gpt-4o')
@@ -137,7 +136,7 @@ You can embed the ChatGPT agent in any Blade file:
 
 ```blade
 <body>  
-    @livewire('filament-chatgpt-agent')  
+    @livewire('fi-ai-chat-agent')  
 </body>
 ```
 
@@ -150,7 +149,7 @@ You can embed the ChatGPT agent in any Blade file:
 
     ...
 
-    @livewire('filament-chatgpt-agent')
+    @livewire('fi-ai-chat-agent')
 </body>
 ```
 
@@ -183,7 +182,7 @@ Refer to the [Laravel GPT documentation](https://github.com/maltekuhr/laravel-gp
 
 ## Page Watcher
 
-![](https://raw.githubusercontent.com/likeabas/filament-chatgpt-agent/main/screenshots/page-watcher.png)
+![](./screenshots/page-watcher.png)
 
 The **Page Watcher** feature allows the ChatGPT agent to receive additional context about the current page by including the `.innerText` of a specified page element (default: `.fi-page`, the Filament page container) along with the page URL in each message sent to ChatGPT. This helps provide better contextual responses based on the page content.
 
@@ -200,7 +199,7 @@ public function panel(Panel $panel): Panel
 {
     return $panel
         ->plugin(
-            ChatgptAgentPlugin::make()
+            AiChatAgentPlugin::make()
                 ->pageWatcherEnabled(true) // Enable page watcher
                 ->pageWatcherSelector('.custom-content') // Specify the selector
                 ->pageWatcherMessage(
@@ -217,7 +216,7 @@ public function panel(Panel $panel): Panel
 {
     return $panel
         ->plugin(
-            ChatgptAgentPlugin::make()
+            AiChatAgentPlugin::make()
                 ->pageWatcherEnabled(fn () => auth()->user()->settings['enable_page_watcher'] ?? false) // User opt-in
                 ->pageWatcherSelector('.fi-page')
         );
@@ -234,6 +233,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- Package created by [Bas Schleijpen](https://github.com/likeabas).
+- **Original Package**: This package is a fork of [likeabas/filament-chatgpt-agent](https://github.com/likeabas/filament-chatgpt-agent) originally created by [Bas Schleijpen](https://github.com/likeabas).
+- **Current Maintainer**: [Edrisa Turay](https://github.com/edrisaturay)
 - The view and livewire component structure was inspired by [Martin Hwang](https://github.com/icetalker).
 - [All Contributors](../../contributors)

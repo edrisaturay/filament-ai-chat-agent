@@ -48,7 +48,7 @@ class AiChatAgent extends Component
     public function mount(): void
     {
         $this->panelHidden = session($this->sessionKey . '-panelHidden', true);
-        $this->winWidth = "width:" . filament('chatgpt-agent')->getDefaultPanelWidth() . ";";
+        $this->winWidth = "width:" . filament('ai-chat-agent')->getDefaultPanelWidth() . ";";
         $this->winPosition = session($this->sessionKey . '-winPosition', '');
         $this->showPositionBtn = true;
         $this->messages = session(

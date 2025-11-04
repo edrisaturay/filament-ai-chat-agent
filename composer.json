@@ -1,13 +1,13 @@
 {
-    "name": "likeabas/filament-chatgpt-agent",
+    "name": "edrisaturay/filament-ai-chat-agent",
     "description": "Integrate with OpenAI ChatGPT",
     "version": "1.0.3",
     "keywords": [
-        "likeabas",
+        "edrisaturay",
         "laravel",
-        "filament-chatgpt-agent"
+        "filament-ai-chat-agent"
     ],
-    "homepage": "https://github.com/likeabas/filament-chatgpt-agent",
+    "homepage": "https://github.com/edrisaturay/filament-ai-chat-agent",
     "license": "MIT",
     "require": {
         "php": ">=8.0",
@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LikeABas\\FilamentChatgptAgent\\": "src"
+            "EdrisaTuray\\FilamentAiChatAgent\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LikeABas\\FilamentChatgptAgent\\Tests\\": "tests"
+            "EdrisaTuray\\FilamentAiChatAgent\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -53,10 +53,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LikeABas\\FilamentChatgptAgent\\FilamentChatgptAgentServiceProvider"
+                "EdrisaTuray\\FilamentAiChatAgent\\FilamentAiChatAgentServiceProvider"
             ],
             "aliases": {
-                "FilamentChatgptAgent": "LikeABas\\FilamentChatgptAgent\\Facades\\FilamentChatgptAgent"
+                "FilamentAiChatAgent": "EdrisaTuray\\FilamentAiChatAgent\\Facades\\FilamentAiChatAgent"
             }
         }
     },
