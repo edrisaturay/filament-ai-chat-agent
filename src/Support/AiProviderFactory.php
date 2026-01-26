@@ -12,8 +12,6 @@ class AiProviderFactory
     /**
      * Create an AI provider instance based on configuration.
      *
-     * @param string|null $provider
-     * @return AiProviderContract
      * @throws InvalidArgumentException
      */
     public static function make(?string $provider = null): AiProviderContract
@@ -21,13 +19,12 @@ class AiProviderFactory
         $provider = $provider ?: config('ai-chat-agent.provider') ?: env('FILAMENT_AI_CHAT_AGENT_PROVIDER', 'openai');
 
         return match (strtolower($provider)) {
-            'openai' => new OpenAiProvider(),
-            'azure' => new AzureOpenAiProvider(),
-            'azure-openai' => new AzureOpenAiProvider(),
+            'openai' => new OpenAiProvider,
+            'azure' => new AzureOpenAiProvider,
+            'azure-openai' => new AzureOpenAiProvider,
             default => throw new InvalidArgumentException(
                 "Unsupported AI provider: {$provider}. Supported providers are: openai, azure, azure-openai"
             ),
         };
     }
 }
-

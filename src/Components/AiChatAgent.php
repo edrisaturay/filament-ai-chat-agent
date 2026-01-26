@@ -41,20 +41,20 @@ class AiChatAgent extends Component
 
     public function __construct()
     {
-        $this->sessionKey = auth()->id() . '-ai-chat-agent-messages';
+        $this->sessionKey = auth()->id().'-ai-chat-agent-messages';
     }
 
     public function mount(): void
     {
-        $this->panelHidden = session($this->sessionKey . '-panelHidden', true);
-        $this->winWidth = "width:" . filament('ai-chat-agent')->getDefaultPanelWidth() . ";";
-        $this->winPosition = session($this->sessionKey . '-winPosition', '');
+        $this->panelHidden = session($this->sessionKey.'-panelHidden', true);
+        $this->winWidth = 'width:'.filament('ai-chat-agent')->getDefaultPanelWidth().';';
+        $this->winPosition = session($this->sessionKey.'-winPosition', '');
         $this->showPositionBtn = true;
         $this->messages = session(
             $this->sessionKey,
             $this->getDefaultMessages()
         );
-        $this->question = "";
+        $this->question = '';
         $this->name = filament('ai-chat-agent')->getBotName();
         $this->buttonText = filament('ai-chat-agent')->getButtonText();
         $this->buttonIcon = filament('ai-chat-agent')->getButtonIcon();
@@ -73,39 +73,40 @@ class AiChatAgent extends Component
     public function sendMessage(): void
     {
         if (empty(trim($this->question))) {
-            $this->question = "";
+            $this->question = '';
+
             return;
         }
 
         $this->messages[] = [
-            "role" => 'user',
-            "content" => $this->question,
+            'role' => 'user',
+            'content' => $this->question,
         ];
 
         $this->chat();
-        $this->question = "";
+        $this->question = '';
         $this->dispatch('sendmessage', ['message' => $this->question]);
     }
 
     public function changeWinWidth(): void
     {
-        if ($this->winWidth == "width:" . filament('ai-chat-agent')->getDefaultPanelWidth() . ";") {
-            $this->winWidth = "width:100%;";
+        if ($this->winWidth == 'width:'.filament('ai-chat-agent')->getDefaultPanelWidth().';') {
+            $this->winWidth = 'width:100%;';
             $this->showPositionBtn = false;
         } else {
-            $this->winWidth = "width:" . filament('ai-chat-agent')->getDefaultPanelWidth() . ";";
+            $this->winWidth = 'width:'.filament('ai-chat-agent')->getDefaultPanelWidth().';';
             $this->showPositionBtn = true;
         }
     }
 
     public function changeWinPosition(): void
     {
-        if ($this->winPosition != "left") {
-            $this->winPosition = "left";
+        if ($this->winPosition != 'left') {
+            $this->winPosition = 'left';
         } else {
-            $this->winPosition = "";
+            $this->winPosition = '';
         }
-        session([$this->sessionKey . '-winPosition' => $this->winPosition]);
+        session([$this->sessionKey.'-winPosition' => $this->winPosition]);
     }
 
     public function resetSession(): void
@@ -116,17 +117,17 @@ class AiChatAgent extends Component
 
     public function togglePanel(): void
     {
-        $this->panelHidden = !$this->panelHidden;
-        session([$this->sessionKey . '-panelHidden' => $this->panelHidden]);
+        $this->panelHidden = ! $this->panelHidden;
+        session([$this->sessionKey.'-panelHidden' => $this->panelHidden]);
     }
 
     protected function chat(): void
     {
-        $chat = new AiChatChat();
+        $chat = new AiChatChat;
         $chat->loadMessages($this->messages);
 
         if ($this->pageWatcherEnabled) {
-            $chat->addMessage(filament('ai-chat-agent')->getPageWatcherMessage() . $this->questionContext);
+            $chat->addMessage(filament('ai-chat-agent')->getPageWatcherMessage().$this->questionContext);
             \Log::info($this->questionContext);
         }
 

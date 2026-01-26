@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 class OpenAiProvider implements AiProviderContract
 {
     protected string $apiKey;
+
     protected ?string $organization;
 
     public function __construct()
@@ -20,8 +21,6 @@ class OpenAiProvider implements AiProviderContract
     /**
      * Make a chat completion request to OpenAI.
      *
-     * @param array $payload
-     * @return array
      * @throws \RuntimeException
      */
     public function makeRequest(array $payload): array
@@ -40,7 +39,7 @@ class OpenAiProvider implements AiProviderContract
             ]);
 
             throw new \RuntimeException(
-                'OpenAI API Error: ' . ($error['error']['message'] ?? 'Unknown error')
+                'OpenAI API Error: '.($error['error']['message'] ?? 'Unknown error')
             );
         }
 
@@ -49,8 +48,6 @@ class OpenAiProvider implements AiProviderContract
 
     /**
      * Get the OpenAI API endpoint URL.
-     *
-     * @return string
      */
     public function getEndpoint(): string
     {
@@ -59,13 +56,11 @@ class OpenAiProvider implements AiProviderContract
 
     /**
      * Get the headers required for the OpenAI API request.
-     *
-     * @return array
      */
     public function getHeaders(): array
     {
         $headers = [
-            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Authorization' => 'Bearer '.$this->apiKey,
             'Content-Type' => 'application/json',
         ];
 
@@ -79,7 +74,6 @@ class OpenAiProvider implements AiProviderContract
     /**
      * Validate the OpenAI configuration.
      *
-     * @return void
      * @throws \RuntimeException
      */
     public function validateConfig(): void
@@ -91,4 +85,3 @@ class OpenAiProvider implements AiProviderContract
         }
     }
 }
-

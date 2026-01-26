@@ -22,5 +22,4 @@ class FilamentAiChatAgentServiceProvider extends PackageServiceProvider
     {
         Livewire::component('fi-ai-chat-agent', AiChatAgent::class);
     }
-
 }

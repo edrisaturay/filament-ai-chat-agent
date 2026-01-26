@@ -264,4 +264,3 @@ return [
 
     'logo_url' => false,
 ];
-

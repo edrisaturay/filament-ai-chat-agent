@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\Log;
 class AzureOpenAiProvider implements AiProviderContract
 {
     protected string $endpoint;
+
     protected string $apiKey;
+
     protected ?string $region;
+
     protected string $deploymentName;
 
     public function __construct()
@@ -24,8 +27,6 @@ class AzureOpenAiProvider implements AiProviderContract
     /**
      * Make a chat completion request to Azure OpenAI.
      *
-     * @param array $payload
-     * @return array
      * @throws \RuntimeException
      */
     public function makeRequest(array $payload): array
@@ -57,7 +58,7 @@ class AzureOpenAiProvider implements AiProviderContract
                 }
             }
 
-            throw new \RuntimeException('Azure OpenAI API Error: ' . $errorMessage);
+            throw new \RuntimeException('Azure OpenAI API Error: '.$errorMessage);
         }
 
         return $response->json();
@@ -65,8 +66,6 @@ class AzureOpenAiProvider implements AiProviderContract
 
     /**
      * Get the Azure OpenAI API endpoint URL.
-     *
-     * @return string
      */
     public function getEndpoint(): string
     {
@@ -79,8 +78,6 @@ class AzureOpenAiProvider implements AiProviderContract
 
     /**
      * Get the headers required for the Azure OpenAI API request.
-     *
-     * @return array
      */
     public function getHeaders(): array
     {
@@ -99,7 +96,6 @@ class AzureOpenAiProvider implements AiProviderContract
     /**
      * Validate the Azure OpenAI configuration.
      *
-     * @return void
      * @throws \RuntimeException
      */
     public function validateConfig(): void
@@ -123,4 +119,3 @@ class AzureOpenAiProvider implements AiProviderContract
         }
     }
 }
-

@@ -2,27 +2,42 @@
 
 namespace EdrisaTuray\FilamentAiChatAgent;
 
+use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
-use Closure;
 
 class AiChatAgentPlugin implements Plugin
 {
     protected bool|Closure|null $enabled = null;
+
     protected string|Closure|null $botName = null;
+
     protected string|Closure|null $buttonText = null;
+
     protected string|Closure|null $buttonIcon = null;
+
     protected string|Closure|null $sendingText = null;
+
     protected string|Closure|null $model = null;
+
     protected float|Closure|null $temperature = null;
+
     protected int|Closure|null $maxTokens = null;
+
     protected string|Closure|null $systemMessage = null;
+
     protected array|Closure|null $functions = null;
+
     protected bool|Closure|null $pageWatcherEnabled = null;
+
     protected string|Closure|null $pageWatcherSelector = null;
+
     protected string|Closure|null $pageWatcherMessage = null;
+
     protected string|Closure|null $defaultPanelWidth = null;
+
     protected bool|string|Closure|null $startMessage = null;
+
     protected bool|string|Closure|null $logoUrl = null;
 
     public static function make(): static
@@ -58,13 +73,15 @@ class AiChatAgentPlugin implements Plugin
 
     public function isEnabled(): bool
     {
-        if (is_null($this->enabled)){
+        if (is_null($this->enabled)) {
             $configEnabled = config('ai-chat-agent.enabled');
-            if (!is_null($configEnabled)) {
+            if (! is_null($configEnabled)) {
                 return is_callable($configEnabled) ? ($configEnabled)() : $configEnabled;
             }
+
             return auth()->check();
         }
+
         return is_callable($this->enabled) ? ($this->enabled)() : $this->enabled;
     }
 
@@ -81,12 +98,12 @@ class AiChatAgentPlugin implements Plugin
             return ($this->botName)();
         }
 
-        if (!is_null($this->botName)) {
+        if (! is_null($this->botName)) {
             return $this->botName;
         }
 
         $configBotName = config('ai-chat-agent.bot_name');
-        if (!is_null($configBotName)) {
+        if (! is_null($configBotName)) {
             return $configBotName;
         }
 
@@ -106,12 +123,12 @@ class AiChatAgentPlugin implements Plugin
             return ($this->buttonText)();
         }
 
-        if (!is_null($this->buttonText)) {
+        if (! is_null($this->buttonText)) {
             return $this->buttonText;
         }
 
         $configButtonText = config('ai-chat-agent.button_text');
-        if (!is_null($configButtonText)) {
+        if (! is_null($configButtonText)) {
             return $configButtonText;
         }
 
@@ -147,12 +164,12 @@ class AiChatAgentPlugin implements Plugin
             return ($this->sendingText)();
         }
 
-        if (!is_null($this->sendingText)) {
+        if (! is_null($this->sendingText)) {
             return $this->sendingText;
         }
 
         $configSendingText = config('ai-chat-agent.sending_text');
-        if (!is_null($configSendingText)) {
+        if (! is_null($configSendingText)) {
             return $configSendingText;
         }
 
@@ -264,7 +281,7 @@ class AiChatAgentPlugin implements Plugin
 
     public function isPageWatcherEnabled(): bool
     {
-        if (is_null($this->pageWatcherEnabled)){
+        if (is_null($this->pageWatcherEnabled)) {
             return config('ai-chat-agent.page_watcher_enabled', false);
         }
 
@@ -300,12 +317,12 @@ class AiChatAgentPlugin implements Plugin
             return ($this->pageWatcherMessage)();
         }
 
-        if (!is_null($this->pageWatcherMessage)) {
+        if (! is_null($this->pageWatcherMessage)) {
             return $this->pageWatcherMessage;
         }
 
         $configMessage = config('ai-chat-agent.page_watcher_message');
-        if (!is_null($configMessage)) {
+        if (! is_null($configMessage)) {
             return $configMessage;
         }
 
