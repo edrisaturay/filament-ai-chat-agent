@@ -361,6 +361,6 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - **Original Package**: This package is a fork of [likeabas/filament-chatgpt-agent](https://github.com/likeabas/filament-chatgpt-agent) originally created by [Bas Schleijpen](https://github.com/likeabas).
-- **Current Maintainer**: [Edrisa Turay](https://github.com/edrisaturay)
+- **Current Maintainer**: [Edrisa Turay](https://github.com/edrisaturay).
 - The view and livewire component structure was inspired by [Martin Hwang](https://github.com/icetalker).
 - [All Contributors](../../contributors)
