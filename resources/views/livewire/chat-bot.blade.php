@@ -115,7 +115,6 @@
                         class="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus:outline-none focus:placeholder-gray-400 dark:bg-transparent pl-2 md:pl-0"
                         id="chat-input">
                     </textarea>
-                    </textarea>
                     <div class="absolute bottom-1.5 md:bottom-2.5 right-1 md:right-2" style="min-width: 25px;">
                         <x-filament::icon-button color="gray" icon="heroicon-o-paper-airplane" wire:loading.remove
                             wire:target="sendMessage" wire:click="sendMessage"
@@ -273,8 +272,14 @@
 @script
     <script>
         const el = document.getElementById('messages');
+        const pageWatcherEnabled = @js($pageWatcherEnabled);
+        const pageWatcherSelector = @js($pageWatcherSelector);
 
         window.addEventListener('sendmessage', event => {
+            if (! el) {
+                return;
+            }
+
             setTimeout(() => {
                 el.scrollTop = el.scrollHeight
             }, 100)
@@ -318,19 +323,27 @@
 
         document.addEventListener('livewire:initialized', function () {
             var textarea = document.querySelector('#chat-input');
+
+            if (! el || ! textarea) {
+                return;
+            }
+
             el.scrollTop = el.scrollHeight;
             textarea.focus();
             el.style.paddingBottom = `${textarea.scrollHeight}px`;
 
-            if ({{ $pageWatcherEnabled }}) {
-                function updateQuestionContext() {
-                    const element = document.querySelector("{{ $pageWatcherSelector }}");
-                    if (element) {
-                        const context = element.innerText;
-                        const value = context + "\nPage URL: " + window.location.href;
-                        @this.set('questionContext', value);
+            if (pageWatcherEnabled) {
+                const updateQuestionContext = () => {
+                    const element = pageWatcherSelector ? document.querySelector(pageWatcherSelector) : null;
+
+                    if (! element) {
+                        return;
                     }
-                }
+
+                    const context = element.innerText;
+                    const value = `${context}\nPage URL: ${window.location.href}`;
+                    @this.set('questionContext', value);
+                };
 
                 updateQuestionContext();
                 setInterval(updateQuestionContext, 5000); 
@@ -339,4 +352,3 @@
     </script>
 @endscript
 </div>
-

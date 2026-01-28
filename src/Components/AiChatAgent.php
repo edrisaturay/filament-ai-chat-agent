@@ -23,7 +23,7 @@ class AiChatAgent extends Component
 
     public string $questionContext;
 
-    public string $pageWatcherEnabled;
+    public bool $pageWatcherEnabled;
 
     public string $pageWatcherSelector;
 
